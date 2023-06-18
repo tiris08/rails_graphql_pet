@@ -1,4 +1,16 @@
 require: rubocop-rails
 
 AllCops:
-    NewCops: enable
+  Exclude:
+    - db/**/*
+    - node_modules/**/*
+    - vendor/**/*
+    - tmp/**/*
+    - config/**/*
+    - bin/**/*
+  NewCops: enable
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
