@@ -21,6 +21,10 @@ PreCommit:
    on_warn: fail # Treat all warnings as failures
    problem_on_unmodified_line: ignore
 
+PrePush:
+  Brakeman:
+    enabled: true
+    on_warn: fail
 
 #  TrailingWhitespace:
 #    enabled: true

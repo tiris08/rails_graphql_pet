@@ -12,5 +12,9 @@ gem 'bootsnap', require: false
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rubocop', require: false
-  gem 'overcommit'
+  gem 'overcommit', '~> 0.60.0'
+  gem 'rspec-rails', '~> 6.0.3'
+  gem 'faker', '~> 3.2'
+  gem 'factory_bot_rails', '~> 6.2.0'
+  gem 'brakeman', '~> 6.0', require: false
 end
