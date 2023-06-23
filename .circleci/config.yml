@@ -1,0 +1,35 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/ruby:3.2.1
+        environment:
+          RAILS_ENV: test
+      - image: cimg/postgres:14.8
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - gems-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Install dependencies
+          command: bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - run:
+          name: Database setup
+          command: |
+            bundle exec rails db:create
+            bundle exec rails db:migrate
+
+      - run:
+          name: Run tests
+          command: bundle exec rspec
+
+      - save_cache:
+          paths:
+            - vendor/bundle
+          key: gems-{{ checksum "Gemfile.lock" }}
