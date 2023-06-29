@@ -18,6 +18,7 @@ end
 group :development do
   gem 'brakeman', '~> 6.0', require: false
   gem 'rubocop', require: false
+  gem 'rubocop-rails'
   gem 'overcommit', '~> 0.60.0'
 end
 
