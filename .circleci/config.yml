@@ -29,6 +29,14 @@ jobs:
           name: Run tests
           command: bundle exec rspec
 
+      - run:
+          name: Run RuboCop
+          command: bundle exec rubocop
+
+      - run:
+          name: Run Brakeman
+          command: bundle exec brakeman
+
       - save_cache:
           paths:
             - vendor/bundle
