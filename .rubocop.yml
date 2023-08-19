@@ -16,3 +16,9 @@ Style/Documentation:
   Enabled: false
 Bundler/OrderedGems:
   Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Naming/MethodParameterName:
+  Enabled: false
+Lint/UselessMethodDefinition:
+  Enabled: false
