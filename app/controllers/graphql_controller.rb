@@ -9,8 +9,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      session:,
+      current_user:
     }
     result = RailsGraphqlPetSchema.execute(query, variables:, context:,
                                                   operation_name:)
@@ -48,5 +48,16 @@ class GraphqlController < ApplicationController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: :internal_server_error
+  end
+
+  def current_user
+    return unless session[:token]
+
+    crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
+    token = crypt.decrypt_and_verify(session[:token])
+    user_id = token.gsub('user-id:', '').to_i
+    User.find_by(id: user_id)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    nil
   end
 end
