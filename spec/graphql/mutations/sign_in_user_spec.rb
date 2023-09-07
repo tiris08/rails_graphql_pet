@@ -14,6 +14,7 @@ RSpec.describe Mutations::SignInUser do
 
       expect(result[:token]).to be_present
       expect(result[:user]).to eq user
+      expect(result[:errors]).to be_blank
     end
 
     it 'does not sign in a user with invalid credentials' do
@@ -24,7 +25,9 @@ RSpec.describe Mutations::SignInUser do
         }
       )
 
-      expect(result).to be_nil
+      expect(result[:token]).to be_nil
+      expect(result[:user]).to be_nil
+      expect(result[:errors]).to eq ['Invalid email or password']
     end
   end
 end

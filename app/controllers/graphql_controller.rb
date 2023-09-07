@@ -53,11 +53,10 @@ class GraphqlController < ApplicationController
   def current_user
     return unless session[:token]
 
-    crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-    token = crypt.decrypt_and_verify(session[:token])
-    user_id = token.gsub('user-id:', '').to_i
-    User.find_by(id: user_id)
-  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    decoded_token = JsonWebToken.decode(session[:token])
+    User.find_by(id: decoded_token[:user_id])
+  rescue JWT::DecodeError => e
+    Rails.logger.error e.message
     nil
   end
 end
