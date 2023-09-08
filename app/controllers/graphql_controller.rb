@@ -9,8 +9,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      session:,
+      current_user:
     }
     result = RailsGraphqlPetSchema.execute(query, variables:, context:,
                                                   operation_name:)
@@ -48,5 +48,15 @@ class GraphqlController < ApplicationController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: :internal_server_error
+  end
+
+  def current_user
+    return unless session[:token]
+
+    decoded_token = JsonWebToken.decode(session[:token])
+    User.find_by(id: decoded_token[:user_id])
+  rescue JWT::DecodeError => e
+    Rails.logger.error e.message
+    nil
   end
 end
