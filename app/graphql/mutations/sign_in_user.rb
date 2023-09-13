@@ -15,7 +15,6 @@ module Mutations
 
       if user&.authenticate(credentials[:password])
         token = JsonWebToken.encode({ user_id: user.id })
-        context[:session][:token] = token
         { user:, token: }
       else
         { token: nil, user: nil, errors: ['Invalid email or password'] }

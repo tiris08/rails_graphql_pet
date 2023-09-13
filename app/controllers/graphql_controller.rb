@@ -51,12 +51,8 @@ class GraphqlController < ApplicationController
   end
 
   def current_user
-    return unless session[:token]
-
-    decoded_token = JsonWebToken.decode(session[:token])
-    User.find_by(id: decoded_token[:user_id])
-  rescue JWT::DecodeError => e
-    Rails.logger.error e.message
+    @current_user ||= UserAuthenticatorService.new(request.headers).call
+  rescue StandardError
     nil
   end
 end
