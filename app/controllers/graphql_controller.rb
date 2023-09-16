@@ -51,7 +51,7 @@ class GraphqlController < ApplicationController
   end
 
   def current_user
-    @current_user ||= UserAuthenticatorService.new(request.headers).call
+    @current_user ||= UserAuthenticationService.new(request.headers).call
   rescue StandardError
     nil
   end

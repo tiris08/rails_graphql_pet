@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserAuthenticatorService do
+RSpec.describe UserAuthenticationService do
   describe '#call' do
     let(:user) { FactoryBot.create :user }
     let(:headers) { { 'Authorization' => "Bearer #{token}" } }
@@ -13,7 +13,7 @@ RSpec.describe UserAuthenticatorService do
       let(:token) { 'invalid token' }
 
       it 'should raise an InvalidTokenError error' do
-        expect { subject }.to raise_error(InvalidTokenError)
+        expect { subject }.to raise_error(JWT::DecodeError)
       end
     end
   end

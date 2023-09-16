@@ -1,4 +1,4 @@
-class UserAuthenticatorService
+class UserAuthenticationService
   def initialize(headers)
     @headers = headers
   end
@@ -16,9 +16,5 @@ class UserAuthenticatorService
   def authenticate
     decoded_token = JsonWebToken.decode(http_token)
     User.find_by(id: decoded_token[:user_id])
-  rescue StandardError
-    raise InvalidTokenError
   end
 end
-
-class InvalidTokenError < StandardError; end
