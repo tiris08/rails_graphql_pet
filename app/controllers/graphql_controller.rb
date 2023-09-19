@@ -9,8 +9,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      session:,
       current_user:
+      # headers: request.headers
     }
     result = RailsGraphqlPetSchema.execute(query, variables:, context:,
                                                   operation_name:)
