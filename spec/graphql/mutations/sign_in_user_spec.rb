@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Mutations::SignInUser do
   describe '#resolve' do
-    let!(:user) { FactoryBot.create :user }
+    let!(:user) { create :user }
 
     it 'signs in a user' do
       result = described_class.new(object: nil, field: nil, context: { session: {} }).resolve(
