@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Mutations::SignInUser do
+describe Mutations::SignInUser do
   describe '#resolve' do
     let!(:user) { create :user }
 

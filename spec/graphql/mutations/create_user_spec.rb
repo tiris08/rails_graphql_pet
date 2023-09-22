@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Mutations::CreateUser do
+describe Mutations::CreateUser do
   describe '#resolve' do
     it 'creates a new user' do
       result = described_class.new(object: nil, field: nil, context: {}).resolve(
