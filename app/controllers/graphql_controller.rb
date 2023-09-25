@@ -9,8 +9,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      session:,
       current_user:
+      # headers: request.headers
     }
     result = RailsGraphqlPetSchema.execute(query, variables:, context:,
                                                   operation_name:)
@@ -51,7 +51,7 @@ class GraphqlController < ApplicationController
   end
 
   def current_user
-    @current_user ||= UserAuthenticatorService.new(request.headers).call
+    @current_user ||= UserAuthenticationService.new(request.headers).call
   rescue StandardError
     nil
   end

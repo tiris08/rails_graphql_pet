@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Mutations::CreateUser do
+describe Mutations::CreateUser do
   describe '#resolve' do
     it 'creates a new user' do
       result = described_class.new(object: nil, field: nil, context: {}).resolve(
@@ -14,10 +14,10 @@ RSpec.describe Mutations::CreateUser do
         }
       )
 
-      expect(result).to be_persisted
-      expect(result.first_name).to eq 'Test'
-      expect(result.last_name).to eq 'User'
-      expect(result.email).to eq 'email@example.com'
+      expect(result[:user]).to be_persisted
+      expect(result[:user].first_name).to eq 'Test'
+      expect(result[:user].last_name).to eq 'User'
+      expect(result[:user].email).to eq 'email@example.com'
     end
   end
 end
