@@ -22,3 +22,5 @@ Naming/MethodParameterName:
   Enabled: false
 Lint/UselessMethodDefinition:
   Enabled: false
+Metrics/BlockLength:
+  Enabled: false
