@@ -10,9 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_19_130759) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_123706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "albums", force: :cascade do |t|
+    t.string "name"
+    t.string "band_name"
+    t.integer "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "publisher"
+    t.date "published_at"
+    t.integer "pages_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "movies", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "genre"
+    t.string "production_company"
+    t.date "filmed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.string "name"
+    t.string "band_name"
+    t.integer "duration"
+    t.bigint "album_id", null: false
+    t.date "released_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_songs_on_album_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"
@@ -26,4 +65,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_130759) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "songs", "albums"
 end
