@@ -99,3 +99,16 @@ end
 #     errors
 #   }
 # }
+
+# query {
+#   songs{
+#     name
+#     bandName
+#     duration
+#     releasedAt
+#     album{
+#       name
+#       bandName
+#     }
+#   }
+# }

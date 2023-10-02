@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Resolvers::Users, type: :request do
+describe Resolvers::Users do
   describe '#resolve' do
     let!(:user) { create :user }
     let!(:user2) { create :user }
