@@ -100,6 +100,7 @@ end
 #   }
 # }
 
+# list all songs
 # query {
 #   songs{
 #     name
@@ -111,4 +112,26 @@ end
 #       bandName
 #     }
 #   }
+# }
+
+# list all compositions
+# query {
+#   compositions {
+#    ...on Book {
+#      __typename
+#      title
+#    },
+#    ...on Movie {
+#      __typename
+#      title
+#    },
+#    ...on Album {
+#      __typename
+#      name
+#    },
+#    ...on Song {
+#      __typename
+#      name
+#    },
+#  }
 # }
