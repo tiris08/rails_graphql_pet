@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::SendPasswordReset do
+describe Mutations::SendPasswordReset, type: :request do
   describe '#resolve' do
     let!(:user) { create :user }
 

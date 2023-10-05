@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mutations::ResetPassword do
+describe Mutations::ResetPassword, type: :request do
   describe '#resolve' do
     let!(:user) { create :user, :with_password_reset_token }
     let(:password) { 'new_password' }

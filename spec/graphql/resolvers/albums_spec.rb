@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Resolvers::Albums do
+describe Resolvers::Albums, type: :request do
   describe '#resolve' do
     let!(:album) { create :album }
     let!(:album2) { create :album }
