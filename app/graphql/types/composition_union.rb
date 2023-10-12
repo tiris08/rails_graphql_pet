@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class CompositionUnion < Types::BaseUnion
     possible_types Types::BookType, Types::MovieType, Types::Music::AlbumType, Types::Music::SongType
