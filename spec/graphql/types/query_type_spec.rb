@@ -30,10 +30,11 @@ describe Types::QueryType, type: :request do
     let!(:books) { create_list(:book, 3) }
     let!(:movies) { create_list(:movie, 3) }
     let!(:songs) { create_list(:song, 3) }
+    let(:type) { 'null' }
     let(:query) do
       <<~GQL
         query {
-          compositions {
+          compositions(type: #{type}) {
             __typename
             ... on Book {
               title
@@ -79,6 +80,42 @@ describe Types::QueryType, type: :request do
         expect(response_compositions.count).to eq(12)
         expect(response_compositions.first['title']).to eq(books.first.title)
         expect(response_compositions.last['name']).to eq(songs.last.name)
+      end
+
+      context 'with type argument' do
+        context 'when type is BOOK' do
+          let(:type) { 'BOOK' }
+
+          it 'returns only books' do
+            subject
+
+            json_response = JSON.parse(response.body)
+            response_compositions = json_response['data']['compositions']
+            response_compositions.map! { |composition| composition['__typename'] }
+
+            expect(response_compositions).to include('Book')
+            expect(response_compositions).not_to include('Album')
+            expect(response_compositions).not_to include('Song')
+            expect(response_compositions).not_to include('Movie')
+          end
+        end
+
+        context 'when type is Music' do
+          let(:type) { 'MUSIC' }
+
+          it 'returns only songs and albums' do
+            subject
+
+            json_response = JSON.parse(response.body)
+            response_compositions = json_response['data']['compositions']
+            response_compositions.map! { |composition| composition['__typename'] }
+
+            expect(response_compositions).to include('Album')
+            expect(response_compositions).to include('Song')
+            expect(response_compositions).not_to include('Book')
+            expect(response_compositions).not_to include('Movie')
+          end
+        end
       end
     end
   end

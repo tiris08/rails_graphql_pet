@@ -8,12 +8,23 @@ module Types
       User.all
     end
 
-    field :compositions, [Types::CompositionUnion], null: false
+    field :compositions, [Types::CompositionUnion], null: false do
+      argument :type, Types::CompositionEnum, required: false
+    end
 
-    def compositions
+    def compositions(type: nil)
       authorize_user
 
-      [Book.all, Movie.all, Album.all, Song.all].flatten
+      case type
+      when 'BOOK'
+        Book.all
+      when 'MOVIE'
+        Movie.all
+      when 'MUSIC'
+        Album.all + Song.all
+      else
+        Book.all + Movie.all + Album.all + Song.all
+      end
     end
   end
 end
