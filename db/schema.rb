@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_123706) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_20_132738) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,6 +30,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_123706) do
     t.integer "pages_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "composition_items", force: :cascade do |t|
+    t.string "composable_type", null: false
+    t.bigint "composable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["composable_type", "composable_id"], name: "index_composition_items_on_composable"
   end
 
   create_table "movies", force: :cascade do |t|

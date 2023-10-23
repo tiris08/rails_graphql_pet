@@ -6,43 +6,34 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+
+FactoryBot.create_list(:user, 5)
+
 5.times do
-  Movie.create!(
-    title: Faker::Movie.title,
-    description: Faker::Lorem.paragraph,
-    genre: Faker::Book.genre,
-    production_company: Faker::Company.name,
-    filmed_at: Faker::Date.between(from: 10.years.ago, to: Date.today)
-  )
+  i = CompositionItem.new()
+  i.composable = FactoryBot.create(:movie)
+  i.save!
 end
 
 5.times do
-  Album.create!(
-    name: Faker::Music.album,
-    band_name: Faker::Music.band,
-    year: Faker::Number.between(from: 1970, to: 2021)
-  )
+  i = CompositionItem.new()
+  i.composable = FactoryBot.create(:album)
+  i.save!
+end
+
+5.times do |times|
+  i = CompositionItem.new()
+  i.composable = FactoryBot.create(:song, album: Album.find(times+1))
+  i.save!
 end
 
 5.times do
-  Song.create!(
-    name: Faker::Music::RockBand.name,
-    band_name: Faker::Music.band,
-    duration: Faker::Number.between(from: 120, to: 600),
-    album: Album.order(Arel.sql('RANDOM()')).first,
-    released_at: Faker::Date.between(from: 10.years.ago, to: Date.today)
-  )
+  i = CompositionItem.new()
+  i.composable = FactoryBot.create(:book)
+  i.save!
 end
 
-5.times do
-  Book.create!(
-    title: Faker::Book.title,
-    description: Faker::Lorem.paragraph,
-    publisher: Faker::Book.publisher,
-    published_at: Faker::Date.between(from: 10.years.ago, to: Date.today),
-    pages_count: Faker::Number.between(from: 100, to: 500)
-  )
-end
+
 
 
 # {
