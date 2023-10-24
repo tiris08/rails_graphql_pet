@@ -8,23 +8,27 @@ module Types
       User.all
     end
 
-    field :compositions, [Types::CompositionUnion], null: false do
+    field :compositions, Types::CompositionUnion.collection_type, null: false do
       argument :type, Types::CompositionEnum, required: false
+      argument :page, Integer, required: false
+      argument :limit, Integer, required: false
     end
 
-    def compositions(type: nil)
+    def compositions(type: nil, page: nil, limit: nil)
       authorize_user
 
-      case type
-      when 'BOOK'
-        Book.all
-      when 'MOVIE'
-        Movie.all
-      when 'MUSIC'
-        Album.all + Song.all
-      else
-        Book.all + Movie.all + Album.all + Song.all
-      end
+      composition_items = case type
+                          when 'BOOK'
+                            CompositionItem.where(composable_type: 'Book')
+                          when 'MOVIE'
+                            CompositionItem.where(composable_type: 'Movie')
+                          when 'MUSIC'
+                            CompositionItem.where(composable_type: %w[Album Song])
+                          else
+                            CompositionItem.where(composable_type: %w[Book Movie Album Song])
+                          end
+
+      Kaminari.paginate_array(composition_items.map(&:composable)).page(page).per(limit)
     end
   end
 end
