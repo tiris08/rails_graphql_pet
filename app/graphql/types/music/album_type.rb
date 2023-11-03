@@ -6,6 +6,11 @@ module Types
       implements Types::Music::MusicInterface
 
       field :year, Integer, null: false
+      field :songs, [Types::Music::SongType], null: true
+
+      def songs
+        Loaders::AssociationLoader.for(Album, :songs).load(object)
+      end
     end
   end
 end
