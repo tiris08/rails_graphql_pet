@@ -25,7 +25,7 @@ describe 'songs', type: :request do
     expect(response_songs.last['name']).to eq(songs.last.name)
   end
 
-  context 'with album' do
+  context 'album' do
     before do
       songs.each do |song|
         create(:album).songs << song
