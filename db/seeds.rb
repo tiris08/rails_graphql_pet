@@ -33,7 +33,9 @@ end
   i.save!
 end
 
-
+Album.all.each do |album|
+  FactoryBot.create_list(:song, 5, album: album)
+end
 
 
 # {

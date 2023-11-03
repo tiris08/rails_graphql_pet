@@ -30,5 +30,17 @@ module Types
 
       Kaminari.paginate_array(composition_items.map(&:composable)).page(page).per(limit)
     end
+
+    field :songs, [Types::Music::SongType], null: true
+
+    def songs
+      Song.all
+    end
+
+    field :albums, [Types::Music::AlbumType], null: true
+
+    def albums
+      Album.all
+    end
   end
 end
